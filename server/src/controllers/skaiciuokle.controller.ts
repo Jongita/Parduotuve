@@ -10,4 +10,10 @@ export class SkaiciuokleController{
             "rezultatas": (x+y)
         });
    } 
-}
+
+   static skaiciai (req:any, res:any){
+    res.json({
+        "skaiciai": 99
+    });
+   };
+};

@@ -1,6 +1,8 @@
 import express, {Application, Request, Response} from 'express';
 import { skaiciuokleRouter } from './routes/skaiciuokle.router';
 import bodyParser from 'body-parser';
+import { corsHeaders } from './middlewares/cors.middleware';
+import { productsRouter } from './routes/products.router';
 
 const app:Application=express();
 
@@ -15,16 +17,11 @@ app.use(express.urlencoded());
 // arba galim naudoti express.json(), nes nereiketu siustis net bodyparserio, nes jis yra express
 app.use(express.json());
 
-
-app.use((req:Request, res:Response, next)=>{
-    res.setHeader("Access-Control-Allow-Origin", "*")
-    res.setHeader("Access-Control-Allow-Headers", "Origin, X-Request-With, Content-Type, Accept")
-    res.setHeader("Access-Control-Allow-Methods", "GET, POST, PATCH, DELETE, OPTIONS");
-    next();
-});
+// i visus response headerius ikeliame CORS nurodymus
+app.use(corsHeaders);
 
 app.use('/skaiciuokle', skaiciuokleRouter);
-
+app.use('/products', productsRouter);
 
 
 export {app};
