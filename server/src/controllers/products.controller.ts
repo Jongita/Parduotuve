@@ -12,7 +12,14 @@ export class ProductsController{
         console.log(req.params.id);
         const sql="SELECT * FROM products WHERE id=?";
         const [result]=await pool.query<Product[]>(sql, [req.params.id]);
-        res.json(result[0]);
+        if (result.length==0){
+            res.status(404).json({
+                'text': 'Pateiktas irasas nerastas'
+            })
+        } else{
+            res.json(result[0]);
+        }
+       
     }
 
 
@@ -21,7 +28,7 @@ export class ProductsController{
     static async insert(req:any, res:any){
         const sql="INSERT INTO products (name, price) VALUES ( ?, ? )";
         await pool.query(sql, [req.body.name, req.body.price]);
-        res.json({
+        res.status(201).json({
             "success":true
         })
     }
