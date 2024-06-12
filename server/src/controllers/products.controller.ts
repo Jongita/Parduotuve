@@ -36,7 +36,7 @@ export class ProductsController{
 
     static async delete(req:any, res:any){
         const sql="DELETE FROM products WHERE id=?";
-        await pool.query(sql, [req.body.id]);
+        await pool.query(sql, [req.params.id]);
         res.json({
             "success":true
         })

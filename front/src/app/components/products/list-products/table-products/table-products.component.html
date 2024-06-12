@@ -16,12 +16,10 @@
                     <td>{{ product.name }}</td>
                     <td>{{ product.price }}</td>
                     <td>
-                        <a class="btn btn-success" [routerLink]="['/products',product.id]">Redaguoti</a>
+                        <a class="btn btn-success" [routerLink]="['/products',product.id]">Redaguoti</a>&nbsp;&nbsp;&nbsp;
+                        <button class="btn btn-danger" (click)="deleteProduct(product.id!)">Istrinti</button>
                     </td>
-
-
                 </tr>
-
             </tbody>
         </table>
     </div>

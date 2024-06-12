@@ -15,12 +15,23 @@ import { RouterLink } from '@angular/router';
 export class TableProductsComponent {
   public products:Product[]=[];
 
+  private loadProducts(){
+    this.productsService.getProducts().subscribe((data)=>{
+      this.products=data;
+    })
+  }
+
   constructor (private productsService:ProductsService){
     productsService.getProducts().subscribe((data)=>{
       this.products=data;
+      this.loadProducts()
     });
   }
 
-
+  public deleteProduct(id:number){
+    this.productsService.deleteProduct(id).subscribe((data)=>{
+      this.loadProducts()
+    })
+  }
 
 }
