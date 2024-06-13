@@ -39,12 +39,16 @@ export class UpdateProductComponent {
   }
 
   public productSubmit(form:NgForm){
-    this.productsService.updateProduct({id:this.id, ...form.form.value}).subscribe((data)=>{
-      this.router.navigate(['products', 'list']);
+    this.productsService.updateProduct({id:this.id, ...form.form.value}).subscribe({
+      next:(data)=>{
+        this.router.navigate(['products', 'list']);
+      },
+      error:(error)=>{
+        this.isError=true;
+        this.errorText=error.error.text;
+      }
     })
 
   }
 
 }
-
-

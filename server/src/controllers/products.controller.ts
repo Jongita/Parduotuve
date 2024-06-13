@@ -25,7 +25,14 @@ export class ProductsController{
 
 
 
-    static async insert(req:any, res:any){
+     static async insert(req:any, res:any){
+
+        if (isNaN(req.body.price)){
+            return res.status(400).json({
+                'text':'Kaina privalo būti skaičius'
+            });
+        }
+
         const sql="INSERT INTO products (name, price) VALUES ( ?, ? )";
         await pool.query(sql, [req.body.name, req.body.price]);
         res.status(201).json({
@@ -35,10 +42,25 @@ export class ProductsController{
 
     static async update(req:any, res:any){
         const sql="UPDATE products SET name=?, price=? WHERE id=?";
-        await pool.query(sql, [req.body.name, req.body.price, req.body.id]);
-        res.json({
-            "success":true
-        })
+
+        if (isNaN(req.body.price)){
+            return res.status(400).json({
+                'text':'Kaina privalo būti skaičius'
+            });
+        }
+
+        try{
+            await pool.query(sql, [req.body.name, req.body.price, req.body.id]);
+        
+            res.json({
+                "success":true
+            });
+        }catch(error){
+            res.status(500).json({
+                'text':'Įvyko atnaujinimo klaida'
+            });
+        }
+        
     }
 
     static async delete(req:any, res:any){
