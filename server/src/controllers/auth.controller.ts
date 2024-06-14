@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import { pool } from "../db/connect";
 import { User } from "../models/user";
+import jwt from "jsonwebtoken";
 
 export class AuthController{
     static async signin(req:any, res:any){
@@ -33,8 +34,21 @@ export class AuthController{
                 'text': 'Ivestas neteisingas slaptazodis arba el.pasto adresas'
             })
         }
+
+        let token=jwt.sign(
+            {
+            id:user.id
+        },
+        "ghiurjeb8nvl+-pq4irnp5rvnpirvnbripnv4",
+        {
+            expiresIn: '2 days'
+        })
+
         res.json({
-            'text': 'Viskas OK'
+            // 'text': 'Viskas OK'
+            'name': user.name,
+            'email':user.email,
+            'token': token
         })
     }
 }
