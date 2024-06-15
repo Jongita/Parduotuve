@@ -4,7 +4,6 @@ import { Product } from '../../../../models/product';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 
-
 @Component({
   selector: 'app-table-products',
   standalone: true,
@@ -18,20 +17,20 @@ export class TableProductsComponent {
   private loadProducts(){
     this.productsService.getProducts().subscribe((data)=>{
       this.products=data;
-    })
+    });
   }
 
   constructor (private productsService:ProductsService){
-    productsService.getProducts().subscribe((data)=>{
-      this.products=data;
-      this.loadProducts()
-    });
+    this.loadProducts();
   }
 
   public deleteProduct(id:number){
     this.productsService.deleteProduct(id).subscribe((data)=>{
-      this.loadProducts()
-    })
+      this.loadProducts();
+    });
+
   }
+
+
 
 }
