@@ -20,6 +20,9 @@ export class NavigationComponent {
     }else{
       this.isLoggedin=false;
     }
+    this.authService.onLoginStatusChange.subscribe((isLoggedin)=>{
+      this.isLoggedin=isLoggedin;
+    })
   }
 
   public logoutClick(){

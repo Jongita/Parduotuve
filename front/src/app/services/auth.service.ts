@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { User } from '../models/user';
 import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs';
@@ -8,6 +8,7 @@ import { tap } from 'rxjs';
 })
 export class AuthService {
   public user:User|null=null;
+  public onLoginStatusChange=new EventEmitter<boolean>
 
    constructor(private httpClient:HttpClient) { 
     const user=localStorage.getItem("user");
@@ -26,12 +27,14 @@ export class AuthService {
     return this.httpClient.post<User>("http://localhost:4999/auth/login", user).pipe(tap( (response)=>{
       this.user=response;
       localStorage.setItem("user", JSON.stringify(this.user))
+      this.onLoginStatusChange.emit(true)
     }))
 }
 
   public logOut(){
     this.user=null;
     localStorage.removeItem("user");
+    this.onLoginStatusChange.emit(false)
     
   }
 
