@@ -5,17 +5,26 @@ import jwt from "jsonwebtoken";
 
 export class AuthController{
     static async signin(req:any, res:any){
-        let name=req.body.name;
-        let email=req.body.email;
-        let password=req.body.password;
+        const name=req.body.name; 
+        const email=req.body.email;
+        let password:string=req.body.password;
 
-        password=await bcrypt.hash(password, 12)
+        password=await bcrypt.hash(password, 12);
 
-        const sql="INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
+        let sql="SELECT * FROM users WHERE email LIKE ?";
+        const [result]=await pool.query<User[]>(sql,[email]);
+        if  (result.length!=0){
+            return res.status(400).json({
+                'text':"Vartotojas su tokiu el. pašto adresu yra registruotas"
+            })
+        }
+
+        sql="INSERT INTO users (name, email, password) VALUES (?, ?, ?)";
         await pool.query(sql, [name, email, password]);
-        res.json({"status": "ok"})
-    }
 
+        res.json({"status":"ok"});
+    }
+    
     static async login(req:any, res:any){
         const email=req.body.email;
         const password=req.body.password;

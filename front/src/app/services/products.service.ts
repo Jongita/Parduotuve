@@ -15,7 +15,6 @@ export class ProductsService {
   public getProducts(){
     return this.http.get<Product[]>('http://localhost:4999/products/');
   }
-
   public getProduct(id:number) {
     return this.http.get<Product>('http://localhost:4999/products/'+id);
   }

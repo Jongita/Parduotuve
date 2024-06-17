@@ -38,7 +38,7 @@ export class UpdateProductComponent {
 
   }
 
-  public productSubmit(form:NgForm){
+    public productSubmit(form:NgForm){
     this.productsService.updateProduct({id:this.id, ...form.form.value}).subscribe({
       next:(data)=>{
         this.router.navigate(['products', 'list']);
@@ -52,3 +52,4 @@ export class UpdateProductComponent {
   }
 
 }
+
