@@ -14,4 +14,8 @@ export class ErrorComponent {
 
   @Input()
   public text:String=""
+
+  public onCloseError(){
+    this.isError=false;
+  }
 }

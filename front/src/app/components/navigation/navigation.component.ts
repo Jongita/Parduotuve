@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth.service';
 import { CommonModule } from '@angular/common';
 
@@ -14,7 +14,7 @@ export class NavigationComponent {
 
   public isLoggedin:boolean=false;
 
-  constructor (private authService:AuthService){
+  constructor (public authService:AuthService, private router:Router){
     if (authService.isLoggedin()){
       this.isLoggedin=true;
     }else{
@@ -28,6 +28,7 @@ export class NavigationComponent {
   public logoutClick(){
     this.authService.logOut();
     this.isLoggedin=false;
+    this.router.navigate(["/"]);
   }
 
 }

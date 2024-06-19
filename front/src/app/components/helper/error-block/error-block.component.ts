@@ -16,6 +16,10 @@ export class ErrorBlockComponent {
   constructor (private errorService:ErrorService){
     errorService.errorEmitter.subscribe((text)=>{
       this.text=text;
+      this.isError=true;
+      setTimeout(() => {
+        this.isError=false;
+      }, 5000);
     })
   }
 }

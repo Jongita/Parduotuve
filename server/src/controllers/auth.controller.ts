@@ -24,7 +24,7 @@ export class AuthController{
 
         res.json({"status":"ok"});
     }
-    
+
     static async login(req:any, res:any){
         const email=req.body.email;
         const password=req.body.password;
@@ -57,7 +57,8 @@ export class AuthController{
             // 'text': 'Viskas OK'
             'name': user.name,
             'email':user.email,
-            'token': token
+            'token': token,
+            'type': user.type
         })
     }
 }
