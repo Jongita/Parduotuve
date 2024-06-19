@@ -7,6 +7,9 @@ import { SigninComponent } from './components/auth/signin/signin.component';
 import { LoginComponent } from './components/auth/login/login.component';
 import { viewGuard } from './guards/view.guard';
 import { editGuard } from './guards/edit.guard';
+import { ListUsersComponent } from './components/users/list-users/list-users.component';
+import { adminGuard } from './guards/admin.guard';
+import { UpdateUserComponent} from './components/users/update-users/update-users.component';
 
 export const routes: Routes = [
     {   
@@ -24,6 +27,16 @@ export const routes: Routes = [
 
     {path:"auth/signin", component:SigninComponent},
     {path:"auth/login", component:LoginComponent},
+
+    {
+        path:"users/list", component:ListUsersComponent,
+        canActivate:[adminGuard]
+    },
+
+    {
+        path:"users/:id", component:UpdateUserComponent,
+        canActivate:[adminGuard]
+    },
 
     {path:"", component:HomePageComponent},
    
