@@ -2,6 +2,7 @@ import bcrypt from "bcrypt";
 import { pool } from "../db/connect";
 import { User } from "../models/user";
 import jwt from "jsonwebtoken";
+import dotenv from "dotenv";
 
 export class AuthController{
     static async signin(req:any, res:any){
@@ -44,11 +45,14 @@ export class AuthController{
             })
         }
 
-        let token=jwt.sign(
+        if (process.env.TOKEN_SECRET!=null){
+            dotenv.config();
+            let token=jwt.sign(
             {
-            id:user.id
+            id:user.id,
+            type:user.type
         },
-        "ghiurjeb8nvl+-pq4irnp5rvnpirvnbripnv4",
+        process.env.TOKEN_SECRET,
         {
             expiresIn: '2 days'
         })
@@ -60,5 +64,7 @@ export class AuthController{
             'token': token,
             'type': user.type
         })
+            
+        }
     }
 }

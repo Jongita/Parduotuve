@@ -1,9 +1,15 @@
 import  jwt  from "jsonwebtoken";
+import dotenv from "dotenv";
 
 const authMiddleware=(req:any,res:any, next:any)=>{
     try{
         const token=req.headers.auth;
-        jwt.verify(token,   "ghiurjeb8nvl+-pq4irnp5rvnpirvnbripnv4");
+        dotenv.config();
+        if (process.env.TOKEN_SECRET!=null){
+            const user=(jwt.verify(token,   process.env.TOKEN_SECRET)) as {id:number, type:number};
+            req.user=user;
+            console.log(user);
+        }
         next();
         
     }catch(error){
