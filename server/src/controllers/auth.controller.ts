@@ -59,6 +59,7 @@ export class AuthController{
 
         res.json({
             // 'text': 'Viskas OK'
+            'id': user.id,
             'name': user.name,
             'email':user.email,
             'token': token,

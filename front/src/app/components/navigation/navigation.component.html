@@ -29,6 +29,9 @@
             <a class="btn btn-success" routerLink="/auth/login" *ngIf="!isLoggedin">
                 Prisijungti
             </a>
+            <a class="btn btn-success mx-3" routerLink="/profile" *ngIf="isLoggedin">
+                Profilis
+            </a>
             <button class="btn btn-primary" (click)="logoutClick()" *ngIf="isLoggedin">
                 Atsijungti
             </button>
