@@ -1,13 +1,14 @@
 export class User{
    
     constructor(
-    public email:String,
+    public email:string,
     public id?:number,
-    public name?:String,
+    public name?:string,
  
-    public password?:String,
+    public password?:string,
     public type?:number,
-    public token?:string
+    public token?:string,
+    public img?:string
     ){}
 
     public getTypeName():String{

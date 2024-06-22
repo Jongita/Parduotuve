@@ -27,10 +27,6 @@ export class ProductsController{
         }
        
     }
-
-
-
-
      static async insert(req:any, res:any){
 
         if (isNaN(req.body.price)){

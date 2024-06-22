@@ -6,6 +6,7 @@ import { productsRouter } from './routes/products.router';
 import { authRouter } from './routes/auth.router';
 import { authMiddleware } from './middlewares/auth.middleware';
 import { userRouter } from './routes/user.router';
+import path from 'path';
 
 const app:Application=express();
 
@@ -23,7 +24,7 @@ app.use(express.json());
 // i visus response headerius ikeliame CORS nurodymus
 app.use(corsHeaders);
 
-// app.get('/products', authMiddleware);
+app.use("/img", express.static(path.join("./img")));
 
 app.use('/skaiciuokle', skaiciuokleRouter);
 app.use('/products', productsRouter);
