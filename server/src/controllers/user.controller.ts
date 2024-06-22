@@ -59,6 +59,11 @@ export class UserController{
         }
 
         if (fileURL!=null){
+            // pasiimti is duomenu bazes buvusi pavadinima
+            const [oldUser]=await pool.query<User[]>("SELECT * FROM users WHERE id=?", [id]);
+           
+            // istrinsim pries tai buvusi faila
+            fs.unlinkSync(path.join('./img/'+oldUser[0].img.split('/').pop()))
             await pool.query("UPDATE users SET img=? WHERE id=? ",[
                 fileURL,
                 id

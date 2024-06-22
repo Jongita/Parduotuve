@@ -1,17 +1,19 @@
 <app-error [isError]="isError" [text]="errorText"></app-error>
 <div class="card mt-3">
-    <div class="card-header">Prideti nauja preke</div>
+    <div class="card-header">Pridėti naują prekę</div>
     <div class="card-body">
         <form (ngSubmit)="productSubmit(f)" #f="ngForm">
             <div class="mb-3">
-                <label for="" class="form-label"></label>
-                <input type="text" class="form-control" name="name" ngModel>
+                <label for="" class="form-label">Pavadinimas</label>
+                <input type="text" class="form-control" name="name" value="" ngModel minlength="2" maxlength="64" required #inputName="ngModel">
             </div>
+            <div *ngIf="!inputName.valid && inputName.touched">Įvestas blogas pavadinimas</div>
             <div class="mb-3">
-                <label for="" class="form-label"></label>
-                <input type="text" class="form-control" name="price" ngModel>
+                <label for="" class="form-label">Kaina</label>
+                <input type="text" class="form-control" name="price" value="" ngModel>
             </div>
-            <button class="btn btn-success" type="submit">prideti</button>
+            <button class="btn btn-success" type="submit">Pridėti</button>
         </form>
+
     </div>
 </div>

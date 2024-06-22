@@ -11,6 +11,8 @@ import { ListUsersComponent } from './components/users/list-users/list-users.com
 import { adminGuard } from './guards/admin.guard';
 import { UpdateUserComponent} from './components/users/update-users/update-users.component';
 import { ProfileComponent } from './components/users/profile/profile.component';
+import { ListOrdersComponent } from './components/orders/list-orders/list-orders.component';
+import { NewOrdersComponent } from './components/orders/new-orders/new-orders.component';
 
 export const routes: Routes = [
     {   
@@ -25,6 +27,17 @@ export const routes: Routes = [
         path:"products/:id", component:UpdateProductComponent,
         canActivate:[editGuard]
     },
+
+
+    {   
+        path:"orders/list",component:ListOrdersComponent,
+        canActivate:[viewGuard]
+    },
+    {
+        path:"orders/new", component:NewOrdersComponent,
+        canActivate:[editGuard]
+    },
+
 
     {path:"auth/signin", component:SigninComponent},
     {path:"auth/login", component:LoginComponent},
