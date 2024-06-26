@@ -1,17 +1,23 @@
 import { pool } from "../db/connect";
-import { Order } from "../models/order";
+import { Order, ResultOrdersProducts } from "../models/order";
 
 
 export class OrderController{
-    static async getAll( req:any, res:any){
-        
-        if (req.user.type>2){
-            return res.status(400).json({
-                text:"Neturite teisiu"
-            })
-        }
+     static async getAll( req:any, res:any){
+       
         const sql="SELECT * FROM orders";
         const [result]=await pool.query<Order[]>(sql);
+
+        for (let i=0; i<result.length; i++){
+            // paprastesnis budas
+            // const sql2="SELECT product_id as productId, count FROM orders_products WHERE order_id=?";
+            // geresnis budas
+            const sql2="SELECT op.product_id as productId, op.count, p.name, p.price FROM orders_products op LEFT JOIN products p ON op.product_id=p.id WHERE order_id=?";   
+            const [products]=await pool.query<ResultOrdersProducts[]>(sql2, [result[i].id]);
+            result[i].products=products;
+            console.log(products);
+       };
+        console.log(result);
         res.json(result);
     }
 
@@ -42,6 +48,17 @@ export class OrderController{
         });
         
         res.status(201).json({
+            "success":true
+        })
+    }
+
+     static async delete(req:any, res:any){
+        let sql="DELETE FROM orders_products WHERE order_id=?";
+        await pool.query(sql, [req.params.id]);
+
+        sql="DELETE FROM orders WHERE id=?";
+        await pool.query(sql, [req.params.id]);
+        res.json({
             "success":true
         })
     }
